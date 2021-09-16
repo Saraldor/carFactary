@@ -7,22 +7,34 @@ public class CarFactoryTest {
     private CarFactory carFactory;
 
     @Test
-    public void new_car_with_registration_number(){
+    public void new_car_from_factory(){
         carFactory = new CarFactory();
+        Car car = carFactory.createCarModel("Volvo", "Red");
 
-        assertEquals( 6, carFactory.getRegistrationNumber().length());
-        assertFalse( (carFactory.getRegistrationNumber().length() < 6), "This will fail" );
+        assertEquals( "Red", car.getCarColor());
+        assertEquals( "Volvo", car.getCarModel());
+        assertFalse( (car.getCarColor().length() == 4), "This will fail" );
+
+        Car car2 = carFactory.createCarModel("Volvo");
+        assertEquals( "Black", car2.getCarColor());
+        assertFalse( (car2.getCarColor().length() == 4), "This will fail" );
     }
     @Test
-    public void new_car_with_parameter_color(){
-        carFactory = new CarFactory("Blue");
-
-        assertEquals( "Blue", carFactory.getColor());
-        assertFalse( (carFactory.getColor().length() == 0), "This will fail" );
-
+    public void new_car_from_factory_with_another_model(){
         carFactory = new CarFactory();
-        assertEquals( "Black", carFactory.getColor());
+        Car car = carFactory.createCarModel("Saab", "Yellow");
+
+        assertNotNull( car);
+        assertEquals( "Yellow", car.getCarColor());
+        assertEquals( "Saab", car.getCarModel());
+        assertFalse( (car.getCarColor().length() == 5), "This will fail" );
+
+        Car car2 = carFactory.createCarModel("Volkswagen");
+        assertNull( car2);
+
+        Car car3 = carFactory.createCarModel("Saab");
+        assertEquals( "White", car3.getCarColor());
+        assertFalse( (car3.getCarColor().length() == 4), "This will fail" );
     }
 
 }
-
